@@ -1,8 +1,4 @@
 # Refer:
-#   check phpmyadmin example supervisor
-#   http://geekyplatypus.com/dockerise-your-php-application-with-nginx-and-php7-fpm/
-#   socket fastcgi_pass config : /usr/local/etc/php-fpm.d/www.conf
-#   tuning: http://www.softwareprojects.com/resources/programming/t-optimizing-nginx-and-php-fpm-for-high-traffic-sites-2081.html
 # SSL generate (non expire):
 #   sudo openssl req -x509 -nodes -days -1 -newkey rsa:2048 -keyout ssl/nginx.key -out ssl/nginx.crt
 # Mount config;
@@ -43,28 +39,3 @@ RUN curl -fSL "https://releases.wikimedia.org/mediawiki/${MEDIAWIKI_MAJOR_VERSIO
 && tar -xzf SyntaxHighlight_GeSHi.tar.gz -C /www/site/extensions \
 && rm SyntaxHighlight_GeSHi.tar.gz
 
-### Custom ###
-#COPY etc /etc/
-#COPY config/opcache.ini /usr/local/etc/php/conf.d/
-#COPY code /www/site
-
-
-## php lib & extensions
-#RUN apt-get update \
-# && apt-get install -y \
-#        git zlib1g-dev \
-#        libfreetype6-dev \
-#        libjpeg62-turbo-dev \
-#        libmcrypt-dev \
-#        libpng12-dev \
-# && docker-php-ext-install -j "$(nproc)" gd mbstring mysqli pdo pdo_mysql zip opcache
-# #&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-#
-# RUN apt-get update \
-#    && apt-get install -y supervisor 
-
-#WORKDIR /www/site
-#EXPOSE 80 443 9000
-#USER hostadmin
-
-#CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
