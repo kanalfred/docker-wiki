@@ -8,11 +8,12 @@
 #   user:  hostadmin uid 1000
 #   group: hostadmin gid 1000
 # Build:
-#   docker build -t test/php-nginx .
+#   docker build -t kanalfred/wiki .
+# Note: require to mount 2 folder 
+#    LocalSettings.php  (file)
+#    images             (folder)
 # Run:
-#    docker run --name web1      -p 8001:80 -p 443:443 -v $PWD/web1:/www -d kanalfred/php-nginx
-#    docker run --name php-nginx -p 8080:80 -p 443:443 --tmpfs /etc/nginx/cache -v $PWD/site:/www -d kanalfred/php-nginx
-
+#    docker run --name wiki -p 8004:80 -v $PWD/LocalSettings.php:/www/site/LocalSettings.php -v $PWD/images:/var/www/html/images -d kanalfred/wiki
 
 FROM kanalfred/php-nginx:latest
 
@@ -34,7 +35,7 @@ RUN curl -fSL "https://releases.wikimedia.org/mediawiki/${MEDIAWIKI_MAJOR_VERSIO
 && chown -R www-data:www-data extensions skins cache images \
 
 # Install extensions
-#SyntaxHighlight_GeSHi
+# SyntaxHighlight_GeSHi
 && curl -fSL "https://extdist.wmflabs.org/dist/extensions/SyntaxHighlight_GeSHi-REL1_29-f18e070.tar.gz" -o SyntaxHighlight_GeSHi.tar.gz \
 && tar -xzf SyntaxHighlight_GeSHi.tar.gz -C /www/site/extensions \
 && rm SyntaxHighlight_GeSHi.tar.gz
